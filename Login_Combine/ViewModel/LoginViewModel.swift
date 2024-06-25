@@ -19,11 +19,22 @@ final class LoginViewModel {
     let validLabelText: AnyPublisher<String?, Never>
     
     init(){
-        loginButtonIsEnabled = loginModel.$isValid
+        
+//        loginButtonIsEnabled = loginModel.$isValid
+//            .map{ $0 }
+//            .eraseToAnyPublisher()
+//        
+//        validLabelText = loginModel.$isValid
+//            .map { isValid in
+//                isValid ? "Valid" : "Invalid"
+//            }
+//            .eraseToAnyPublisher()
+        
+        loginButtonIsEnabled = loginModel.isValidPub
             .map{ $0 }
             .eraseToAnyPublisher()
         
-        validLabelText = loginModel.$isValid
+        validLabelText = loginModel.isValidPub
             .map { isValid in
                 isValid ? "Valid" : "Invalid"
             }
@@ -42,4 +53,5 @@ final class LoginViewModel {
             }
             .store(in: &subscriptions)
     }
+
 }

@@ -11,12 +11,18 @@ import Combine
 final class LoginModel {
     private(set) var userId = ""
     private(set) var password = ""
-    @Published private(set) var isValid = false
+//    @Published private(set) var isValid = false
+    private let isValid = CurrentValueSubject<Bool, Never>(false)
+    
+    var isValidPub: AnyPublisher<Bool, Never> {
+        isValid.eraseToAnyPublisher()
+    }
     
     func update(userId: String, password: String){
         self.userId = userId
         self.password = password
-        isValid = userId.count >= 4 && password.count >= 4
+//        isValid = userId.count >= 4 && password.count >= 4
+        isValid.value = userId.count >= 4 && password.count >= 4
     }
     
     func login() {
